@@ -46,11 +46,8 @@ iptables -t nat -A OUTPUT -o lo -p tcp --dport 25 -j REDIRECT --to-port 2525
 
 
 ## step five (optional)  
-forward port 80 and 443 to 3000 (or your web port)  
-```bash
-iptables -t nat -A OUTPUT -o lo -p tcp --dport 25 -j REDIRECT --to-port 2525
-```
 if you enabled authentication, generate a key with
 ```bash
 npm run key
 ```
+and add it to your config file

@@ -75,45 +75,31 @@
     <meta name="og:description" content="a based email server." />
   </head>
   <body>
-    <h1 id="setup">setup</h1>
-<article class="message is-warning">
-  <div class="message-body">
-    this guide **assumes** that you have a linux server. if you are on windows, steps should be similar, but support is not 100% gauranteed..
-    if you want to make a guide for windows, make a PR.
-    <a href="https://my.frantech.ca/aff.php?aff=5405">cheap linux servers (affiliate URL)</a>
-  </div>
-</article>
-
-<h2 id="step-one">step one</h2>
-<p>install node and npm:  </p>
-<pre><code class="language-bash">wget https://cdn.jsdelivr.net/npm/n/bin/n
-sudo n lts
+    <h1 id="configuration">configuration</h1>
+<p>the config is a single js file: <code>config.js</code></p>
+<pre><code class="language-json">{
+    &quot;port&quot;: 3000,
+    &quot;smtpPort&quot;: 25,
+    &quot;expiry&quot;: 1000 * 60 * 1,
+    &quot;authorization&quot;: {
+        &quot;enabled&quot;: false,
+        &quot;key&quot;: &quot;sup3rsecret&quot;
+    }
+}
 </code></pre>
-<h2 id="step-two">step two</h2>
-<p>clone the repo and install required modules  </p>
-<pre><code class="language-bash">git clone https://git.sr.ht/~neu/mail-server
-cd mail-server
-npm i
-</code></pre>
-<h2 id="step-three">step three</h2>
-<p>running<br>to run once</p>
-<pre><code class="language-bash">node .
-</code></pre>
-<p>to run 24/7  </p>
-<pre><code class="language-bash">sudo npm i -g pm2
-pm2 start ecosystem.config.js
-</code></pre>
-<p><a href="https://pm2.keymetrics.io/docs/usage/quick-start/">pm2 documentation</a></p>
-<h2 id="step-four">step four</h2>
-<p>to listen on port 25 on linux requires root priveleges, and that isn&#39;t the best thing to give to a public-facing app<br>to combat this, I use iptables to forward traffic from port 25 to 2525<br>also, most hosts block port 25 incoming traffic to block email spam, so you may need to ask them to open it for you  </p>
-<h3 id="add-iptables-forwarding-rule">add iptables forwarding rule</h3>
-<pre><code class="language-bash">iptables -t nat -A OUTPUT -o lo -p tcp --dport 25 -j REDIRECT --to-port 2525
-</code></pre>
-<h2 id="step-five-optional">step five (optional)</h2>
-<p>if you enabled authentication, generate a key with</p>
-<pre><code class="language-bash">npm run key
-</code></pre>
-<p>and add it to your config file</p>
-
+<h2 id="config-options">config options</h2>
+<h3 id="port">port</h3>
+<p>the port that the HTTP server should listen on<br>defualt: <code>3000</code></p>
+<h3 id="smtpport">smtpPort</h3>
+<p>the port that the SMTP server should listen on<br>default: <code>25</code></p>
+<h3 id="expiry">expiry</h3>
+<p>how long an email should be saved until it expires
+default: <code>1000 * 60 * 1</code> (1 minute)</p>
+<h3 id="authorizationenabled">authorization.enabled</h3>
+<p>whether to enable authorization</p>
+<h3 id="authorizationkey">authorization.key</h3>
+<p>a key to be used if authorization is enabled. the key is a header (<code>Authorization</code>), or can be used with the <code>?token=</code> query parameter</p>
+<!--#### also see [node-mail-api-client]()-->
+<!-- soon? -->
   </body>
   

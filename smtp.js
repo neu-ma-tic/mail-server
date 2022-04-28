@@ -1,7 +1,7 @@
 const SMTPServer = require("smtp-server").SMTPServer;
 const simpleParser = require("mailparser").simpleParser;
 const config = require("./config");
-const Mail = require("./http.js");
+const {Mail} = require("./http.js");
 
 function start() {
   console.log("starting smtp on", config.smtpPort);
@@ -11,6 +11,15 @@ function start() {
     disabledCommands: ["AUTH"],
     disableReverseLookup: true,
     maxClients: 7,
+    onConnect(session, callback) {
+      return callback();
+    },
+    onMailFrom(address, session, callback) {
+      return callback();
+    },
+    onRcptTo(address, session, callback) {
+      return callback();
+    },
     onData(stream, session, cb) {
       let raw = "";
 

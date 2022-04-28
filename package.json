@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "key": "node -e \"console.log(crypto.randomBytes(50).toString('hex'))\" "
+    "key": "node -e \"console.log(crypto.randomBytes(50).toString('hex'))\" ",
+    "docs": "cd docs && node build.js && cd .."
   },
   "keywords": [],
   "author": "",

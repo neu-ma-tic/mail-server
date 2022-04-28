@@ -1,7 +1,7 @@
 module.exports = {
     port: 3000,
-    smtpPort: 2525,
-    expiry: 1000 * 60 * 10, // 10m
+    smtpPort: 25, // may have to run as root or use iptables
+    expiry: 1000 * 60 * 1, // 1m
     authorization: {
         enabled: false,
         key: "sup3rsecret" // npm run key
